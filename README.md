@@ -11,6 +11,7 @@ This app is build using Next.js.
    `npm install @emotion/react`  
    `npm install @emotion/styled` 
 4. for UUID generation: `npm install uuid`
+5. for Cloudant: `npm install @ibm-cloud/cloudant`
 
 ##Docker build
 Dockerfile taken from: https://nextjs.org/docs/deployment  
