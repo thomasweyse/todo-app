@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-db-config
+  namespace: todo-db
+data:
+  SERVER_URL: "http://127.0.0.1:3000"
+  CLOUDANT_URL: "https://ddfc6f2b-ef9a-4f90-bc21-7b4721757507-bluemix.cloudant.com"
+  CLOUDANT_DB_NAME: "todo-db"

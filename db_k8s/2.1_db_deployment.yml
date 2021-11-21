@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-db-deployment
+  labels:
+    app: todo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-db
+  template:
+    metadata:
+      labels:
+        app: todo-db
+    spec:
+      containers:
+      - name: todo-db-nextjs
+        image: rudipailer/todo-db:latest
+        ports:
+        - containerPort: 3000
+          name: todo-db
+        env:
+          - name: SERVER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: todo-db-config
+                key: SERVER_URL
+          - name: CLOUDANT_URL
+            valueFrom:
+              configMapKeyRef:
+                name: todo-db-config
+                key: CLOUDANT_URL
+          - name: CLOUDANT_DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: todo-db-config
+                key: CLOUDANT_DB_NAME
+          - name: CLOUDANT_APIKEY
+            valueFrom:
+              secretKeyRef:
+                name: todo-db-secret
+                key: apikey

@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: todo-db
+  labels:
+    name: todo-db
