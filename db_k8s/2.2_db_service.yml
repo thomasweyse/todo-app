@@ -4,7 +4,7 @@ metadata:
   labels:
     app: todo-db
   name: todo-db-svc
-  namespace: todo-db
+  namespace: todo-db-rp
 spec:
   type: NodePort
   ports:

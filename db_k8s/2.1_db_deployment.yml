@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-db-deployment
+  namespace: todo-db-rp
   labels:
     app: todo-db
 spec:
