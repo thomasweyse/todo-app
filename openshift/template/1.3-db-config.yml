@@ -6,4 +6,4 @@ metadata:
 data:
   SERVER_URL: "http://127.0.0.1:3000"
   CLOUDANT_URL: "https://312c7150-eb85-42ac-83f5-225a79aeb266-bluemix.cloudantnosqldb.appdomain.cloud"
-  CLOUDANT_DB_NAME: "todo-db-rp"
+  CLOUDANT_DB_NAME: "APP_DB_NAME"
