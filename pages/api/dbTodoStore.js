@@ -27,26 +27,7 @@ export default async function handler(req, res) {
 async function getTodos(req, res) {
     try {
         console.log("get todos");
-        let { client } = await connectToDatabase();
-        let result = {
-            message: {
-                list: []
-            },
-            success: false,
-        }
-        await client.postAllDocs({
-            db: CLOUDANT_DB_NAME,
-            includeDocs: true,
-          }).then(response => {
-            //console.log(response);
-            response.result.rows.forEach( row => {
-                console.log(row);
-                result.message.list.push(row.doc)
-            });
-            result.success = true;
-        });
-        console.log("Result:");
-        console.log(result);
+        let result = callGetTodos();
 
         return res.json(result);
     } catch (error) {
@@ -56,6 +37,31 @@ async function getTodos(req, res) {
             success: false,
         });
     }
+}
+
+export async function callGetTodos() {
+    console.log("callGetTodos()");
+    let { client } = await connectToDatabase();
+    let getResult = {
+        message: {
+            list: []
+        },
+        success: false,
+    }
+    await client.postAllDocs({
+        db: CLOUDANT_DB_NAME,
+        includeDocs: true,
+      }).then(response => {
+        //console.log(response);
+        response.result.rows.forEach( row => {
+            console.log(row);
+            getResult.message.list.push(row.doc)
+        });
+        getResult.success = true;
+    });
+    console.log("Result:");
+    console.log(getResult);
+    return getResult;
 }
 
 async function createTodo(req, res) {

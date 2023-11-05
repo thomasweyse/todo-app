@@ -37,6 +37,10 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
+ENV CLOUDANT_URL=https://312c7150-eb85-42ac-83f5-225a79aeb266-bluemix.cloudantnosqldb.appdomain.cloud
+ENV CLOUDANT_APIKEY=sX-QIYil9WC_95AKPRrPpXFx8Z8jPo0isLDyRt4v7uPT
+ENV CLOUDANT_DB_NAME=todo-db-rp
+
 # You only need to copy next.config.js if you are NOT using the default configuration
 # COPY --from=builder /app/next.config.js ./
 COPY --from=builder --chown=1001:1001 /app/node_modules ./node_modules

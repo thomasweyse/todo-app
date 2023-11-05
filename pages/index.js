@@ -5,6 +5,7 @@ import TodoList from '../components/TodoList'
 import { useRouter } from 'next/router'
 import TodoAdd from '../components/TodoAdd'
 import { v4 as uuidv4 } from 'uuid';
+import { callGetTodos } from '../pages/api/dbTodoStore.js';
 
 /* enable for todos in memory */
 //const storePath = 'todoStore';
@@ -19,7 +20,7 @@ export default function Home(todos) {
   const onDelete = async (id) => {
     console.log("onDelete: " + id);
     let todo = todos.list.find(t => t._id === id);
-    let response = await fetch('/api/' + storePath, {
+    let response = await fetch(getBasePath() + storePath, {
       method: 'DELETE',
       body: JSON.stringify(todo),
     });
@@ -45,7 +46,7 @@ export default function Home(todos) {
       console.log("newTodo:");
       console.log(newTodo);
   
-      let response = await fetch('/api/' + storePath, {
+      let response = await fetch(getBasePath() + storePath, {
         method: 'PUT',
         body: JSON.stringify(newTodo),
       });
@@ -69,7 +70,7 @@ export default function Home(todos) {
       text: input,
       fsinished: false,
     }
-    let response = await fetch('/api/' + storePath, {
+    let response = await fetch(getBasePath() + storePath, {
       method: 'POST',
       body: JSON.stringify(todo),
     });
@@ -82,6 +83,14 @@ export default function Home(todos) {
     }
 
     router.replace(router.asPath);
+  }
+
+  const getBasePath = () => {
+    if (process.env.BASE_PATH) {
+      return process.env.BASE_PATH + '/api/';
+    } else {
+      return '/api/';
+    }
   }
 
   return (
@@ -102,18 +111,9 @@ export default function Home(todos) {
 }
 
 export async function getServerSideProps(ctx) {
-  // get the current environment
-  let { SERVER_URL } = process.env;
-  if (!SERVER_URL) {
-    SERVER_URL = "http://127.0.0.1:3000";
-  }
-  console.log("SERVER_URL=" + SERVER_URL);
-
-  // request posts from api
-  let response = await fetch(`${SERVER_URL}/api/` + storePath);
-  // extract the data
-  let data = await response.json();
-
+  //this code runs on the backen - direct call to todo store code necessary
+  let data = await callGetTodos();
+  console.log("getServerSideProps successful");
   return {
       props: {
           list: data['message'].list,
