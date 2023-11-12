@@ -62,7 +62,7 @@ export default function Home(todos) {
     let todo = {
       _id: uuidv4(),
       text: input,
-      fsinished: false,
+      finished: false,
     }
     let response = await fetch('/api/' + storePath, {
       method: 'POST',
