@@ -6,7 +6,12 @@ import { useRouter } from 'next/router'
 import TodoAdd from '../components/TodoAdd'
 import { v4 as uuidv4 } from 'uuid';
 
-const storePath = 'todoStore';
+/* enable for todos in memory */
+//const storePath = 'todoStore';
+
+/* enable for todos in Cloudant DB */
+const storePath = 'dbTodoStore';
+
 
 export default function Home(todos) {
   const router = useRouter();
