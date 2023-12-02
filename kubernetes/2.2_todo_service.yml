@@ -4,6 +4,7 @@ metadata:
   labels:
     app: todo-app
   name: todo-svc
+  namespace: todo-app-xx
   namespace: todo-app
 spec:
   type: NodePort
