@@ -14,6 +14,9 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+USER 1001:1001
+TAG rudipailer/todo-app-deps
+
 # Rebuild the source code only when needed
 FROM registry.access.redhat.com/ubi8/nodejs-16 AS builder
 USER 0
@@ -25,6 +28,9 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npm run build
+
+USER 1001:1001
+TAG rudipailer/todo-app-builder
 
 # Production image, copy all the files and run next
 FROM registry.access.redhat.com/ubi8/nodejs-16-minimal AS runner
@@ -51,3 +57,4 @@ USER 1001:1001
 EXPOSE 3000
 
 CMD ["npm", "start"]
+TAG rudipailer/todo-app
