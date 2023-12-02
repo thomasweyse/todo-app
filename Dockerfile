@@ -1,6 +1,7 @@
 # OpenShift ready adoption for NEXT.JS Application
 
 # Install dependencies only when needed
+# hadolint ignore=DL3006
 FROM registry.access.redhat.com/ubi8/nodejs-16 AS deps
 USER 0
 WORKDIR /app
@@ -15,9 +16,9 @@ RUN \
   fi
 
 USER 1001:1001
-TAG rudipailer/todo-app-deps
 
 # Rebuild the source code only when needed
+# hadolint ignore=DL3006
 FROM registry.access.redhat.com/ubi8/nodejs-16 AS builder
 USER 0
 WORKDIR /app
@@ -30,9 +31,9 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
 
 USER 1001:1001
-TAG rudipailer/todo-app-builder
 
 # Production image, copy all the files and run next
+# hadolint ignore=DL3006
 FROM registry.access.redhat.com/ubi8/nodejs-16-minimal AS runner
 USER 0
 WORKDIR /app
@@ -57,4 +58,3 @@ USER 1001:1001
 EXPOSE 3000
 
 CMD ["npm", "start"]
-TAG rudipailer/todo-app
