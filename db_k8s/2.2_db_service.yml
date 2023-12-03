@@ -2,16 +2,16 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: todo-db
-  name: todo-db-svc
-  namespace: todo-db-rp
+    app: todo-app
+  name: todo-svc
+  namespace: todo-app-xx
 spec:
   type: NodePort
   ports:
-  - name: todo-db-svc
+  - name: todo-svc
     port: 3000
     targetPort: 3000
-    nodePort: 31001
+    nodePort: 310xx
   selector:
-    app: todo-db
+    app: todo-app
   
