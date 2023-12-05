@@ -5,16 +5,43 @@ import TodoList from '../components/TodoList'
 import { useRouter } from 'next/router'
 import TodoAdd from '../components/TodoAdd'
 import { v4 as uuidv4 } from 'uuid';
+import { useState, useEffect } from 'react'
 
+/* enable for todos in memory */
 const storePath = 'todoStore';
 
-export default function Home(todos) {
+
+export default function Home() {
+
+  const def = {
+    "list":[]
+  };
+
+  const [todos, setTodos] = useState(def)
+  const [isLoading, setLoading] = useState(true)
+ 
+  useEffect(() => {
+    let url = (process.env.BASE == null ? '' : process.env.BASE) + '/api/' + storePath;
+    console.log(url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+//        console.log(data);
+        setTodos(data.message)
+        setLoading(false)
+      })
+  }, [])
+
+
+
   const router = useRouter();
 
   const onDelete = async (id) => {
     console.log("onDelete: " + id);
     let todo = todos.list.find(t => t._id === id);
-    let response = await fetch('/api/' + storePath, {
+
+    let url = (process.env.BASE == null ? '' : process.env.BASE) + '/api/' + storePath;
+    let response = await fetch(url, {
       method: 'DELETE',
       body: JSON.stringify(todo),
     });
@@ -26,7 +53,11 @@ export default function Home(todos) {
     } else {
     }
 
-    router.replace(router.asPath);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setTodos(data.message)
+      });
   }
 
   const onToggle = async (id) => {
@@ -39,8 +70,9 @@ export default function Home(todos) {
       }
       console.log("newTodo:");
       console.log(newTodo);
-  
-      let response = await fetch('/api/' + storePath, {
+
+      let url = (process.env.BASE == null ? '' : process.env.BASE) + '/api/' + storePath;
+      let response = await fetch(url, {
         method: 'PUT',
         body: JSON.stringify(newTodo),
       });
@@ -52,7 +84,11 @@ export default function Home(todos) {
       } else {
       }
   
-      router.replace(router.asPath);  
+      fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setTodos(data.message)
+      });
     }
   }
 
@@ -62,21 +98,29 @@ export default function Home(todos) {
     let todo = {
       _id: uuidv4(),
       text: input,
-      finished: false,
+      fsinished: false,
     }
-    let response = await fetch('/api/' + storePath, {
+    let url = (process.env.BASE == null ? '' : process.env.BASE) + '/api/' + storePath;
+    console.log(url);
+    let response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(todo),
     });
 
     // get the data
     let data = await response.json();
+    console.log("create");
+    console.log(data);
 
     if (data.success) {
     } else {
     }
 
-    router.replace(router.asPath);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setTodos(data.message)
+      });
   }
 
   return (
@@ -96,22 +140,3 @@ export default function Home(todos) {
   )
 }
 
-export async function getServerSideProps(ctx) {
-  // get the current environment
-  let { SERVER_URL } = process.env;
-  if (!SERVER_URL) {
-    SERVER_URL = "http://127.0.0.1:3000";
-  }
-  console.log("SERVER_URL=" + SERVER_URL);
-
-  // request posts from api
-  let response = await fetch(`${SERVER_URL}/api/` + storePath);
-  // extract the data
-  let data = await response.json();
-
-  return {
-      props: {
-          list: data['message'].list,
-      },
-  };
-}
