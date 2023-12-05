@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-app-deployment
-  namespace: todo-app-xx
+  namespace: todo-app-99
   labels:
     app: todo-app
 spec:
@@ -22,11 +22,11 @@ spec:
         - containerPort: 3000
           name: todo
         env:
-          - name: SERVER_URL
+          - name: BASE_PATH
             valueFrom:
               configMapKeyRef:
                 name: todo-config
-                key: SERVER_URL
+                key: BASE_PATH
           - name: CLOUDANT_URL
             valueFrom:
               configMapKeyRef:

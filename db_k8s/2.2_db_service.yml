@@ -4,14 +4,14 @@ metadata:
   labels:
     app: todo-app
   name: todo-svc
-  namespace: todo-app-xx
+  namespace: todo-app-99
 spec:
   type: NodePort
   ports:
   - name: todo-svc
     port: 3000
     targetPort: 3000
-    nodePort: 310xx
+    nodePort: 31099
   selector:
     app: todo-app
   

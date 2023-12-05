@@ -1,0 +1,1 @@
+for base-path see: ./next/routes-manifest.json
