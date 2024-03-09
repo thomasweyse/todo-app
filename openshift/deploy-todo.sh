@@ -47,7 +47,7 @@ CREATE_PROJECT= `oc new-project ${PROJECT}`
 echo "  Create the Project... ${PROJECT} $CREATE_PROJECT"
 
 # Change the instance name of node-red in tmp-deploy
-for s in 1.1-image-stream.yaml 1.2-build-config.yaml 1.3-db-config.yml 1.4-db-secret.yml 1.5-deployment-config.yaml 1.6-service.yaml 1.7-route.yaml 
+for s in 1.0_namespace.yml 1.1-image-stream.yml 1.2-build-config.yml 1.3-db-config.yml 1.4-db-secret.yml 1.5-deployment-config.yml 1.6-service.yml 1.7-route.yml 
 do
     # adopt yaml for deployment
     CHANGE_INSTANCE=`sed -e "s#${CHANGE_NAME}#${NAME}#g" -e "s#${CHANGE_PROJECT}#${PROJECT}#g" -e "s#${CHANGE_DB}#${DB_NAME}#g" template\/${s} > tmp-deploy\/${s}`

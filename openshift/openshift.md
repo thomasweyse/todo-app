@@ -11,6 +11,6 @@
 - run deploy-todo.sh
 
 
-`./deploy-todo -i todo-app-oh -p todo-app-oh`
+`./deploy-todo-sh -i todo-app-oh -p todo-app-oh -d todo-db`
 
 
