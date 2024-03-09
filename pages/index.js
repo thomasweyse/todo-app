@@ -22,9 +22,14 @@ export default function Home() {
 
   const [todos, setTodos] = useState(def)
   const [isLoading, setLoading] = useState(true)
+
+  let baseUrl = "";
+  if (process.env.BASE) {
+    baseUrl = process.env.BASE
+  }
  
   useEffect(() => {
-    let url = process.env.BASE + '/api/' + storePath;
+    let url = baseUrl + '/api/' + storePath;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -42,7 +47,7 @@ export default function Home() {
     console.log("onDelete: " + id);
     let todo = todos.list.find(t => t._id === id);
 
-    let url = process.env.BASE + '/api/' + storePath;
+    let url = baseUrl + '/api/' + storePath;
     let response = await fetch(url, {
       method: 'DELETE',
       body: JSON.stringify(todo),
@@ -73,7 +78,7 @@ export default function Home() {
       console.log("newTodo:");
       console.log(newTodo);
 
-      let url = process.env.BASE + '/api/' + storePath;
+      let url = baseUrl + '/api/' + storePath;
       let response = await fetch(url, {
         method: 'PUT',
         body: JSON.stringify(newTodo),
@@ -102,7 +107,7 @@ export default function Home() {
       text: input,
       fsinished: false,
     }
-    let url = process.env.BASE + '/api/' + storePath;
+    let url = baseUrl + '/api/' + storePath;
     console.log(url);
     let response = await fetch(url, {
       method: 'POST',
