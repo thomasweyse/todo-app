@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-app-deployment
-  namespace: todo-app-99
+  namespace: todo-app-rp
   labels:
     app: todo-app
 spec:
