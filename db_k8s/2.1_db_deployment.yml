@@ -22,11 +22,6 @@ spec:
         - containerPort: 3000
           name: todo
         env:
-          - name: BASE_PATH
-            valueFrom:
-              configMapKeyRef:
-                name: todo-config
-                key: BASE_PATH
           - name: CLOUDANT_URL
             valueFrom:
               configMapKeyRef:
