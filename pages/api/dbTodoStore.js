@@ -27,6 +27,7 @@ export default async function handler(req, res) {
 async function getTodos(req, res) {
     try {
         console.log("get todos");
+        console.log(CLOUDANT_DB_NAME);
         let { client } = await connectToDatabase();
         let result = {
             message: {
